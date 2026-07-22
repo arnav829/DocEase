@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { AdminContext } from '../context/AdminContext'
 import { DoctorContext } from '../context/DoctorContext'
 import { useNavigate } from 'react-router-dom'
+import DocEaseLogo from '../assets/DocEase_logo.png';
 
 const Navbar = () => {
 
@@ -22,7 +23,7 @@ const Navbar = () => {
     return (
         <div className='flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white'>
             <div className='flex items-center gap-2 text-xs'>
-                <img className='w-36 sm:w-40 cursor-pointer' src={assets.admin_logo} alt="" />
+                <img className='w-20 sm:w-40 cursor-pointer' src={DocEaseLogo} alt="" />
                 <p className='border px-2.5 rounded-full border-gray-500 text-gray-600'>
                     {aToken ? 'Admin' : dToken ? 'Doctor' : 'Guest'}
                 </p>
