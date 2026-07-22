@@ -92,6 +92,15 @@ Cloud Services
 Cloudinary
 
 
+DocEase project has three parts:
+
+Frontend (User) → React + Vite
+Admin Panel → React + Vite
+Backend → Node.js + Express + MongoDB + Cloudinary
+
+
+
+
 🌟 Future Enhancements
 Email Notifications
 Video Consultation
