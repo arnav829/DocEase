@@ -5,190 +5,171 @@ import { AppContext } from "../context/AppContext";
 import logo from "../assets/DocEase_logo.png";
 
 const Navbar = () => {
+
   const navigate = useNavigate();
 
-  const { token, setToken, userData } = useContext(AppContext)
+  const { token, setToken, userData } = useContext(AppContext);
 
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(false);
+
 
   const logout = () => {
-    setToken(false)
-    localStorage.removeItem('token')
-  }
+    setToken(false);
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
 
   return (
-    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-gray-300">
+    <div className="flex items-center justify-between py-4 mb-5 border-b border-gray-300 px-3 sm:px-5 md:px-10 lg:px-14">
 
       {/* Logo */}
-      <img
-        onClick={() => navigate("/")}
-        className="w-40 cursor-pointer"
-        src={logo}
-        alt="Logo"
-      />
+      <img onClick={()=>navigate("/")} className="w-32 sm:w-36 md:w-40 cursor-pointer" src={logo} alt="logo" />
+
 
       {/* Desktop Navigation */}
-      <ul className="hidden md:flex items-center gap-5 font-medium">
-        <NavLink to="/" onClick={() => setShowMenu(false)}>
+      <ul className="hidden md:flex items-center gap-5 lg:gap-8 text-sm font-medium">
+
+        <NavLink to="/" className={({isActive})=>isActive?"text-primary":""}>
           <li className="py-1">HOME</li>
         </NavLink>
 
-        <NavLink to="/doctors" onClick={() => setShowMenu(false)}>
+        <NavLink to="/doctors" className={({isActive})=>isActive?"text-primary":""}>
           <li className="py-1">ALL DOCTORS</li>
         </NavLink>
 
-        <NavLink to="/about" onClick={() => setShowMenu(false)}>
+        <NavLink to="/about" className={({isActive})=>isActive?"text-primary":""}>
           <li className="py-1">ABOUT</li>
         </NavLink>
 
-        <NavLink to="/contact" onClick={() => setShowMenu(false)}>
+        <NavLink to="/contact" className={({isActive})=>isActive?"text-primary":""}>
           <li className="py-1">CONTACT</li>
         </NavLink>
+
       </ul>
 
+
+
       {/* Right Section */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
 
         {token ? (
+
           <div className="flex items-center gap-2 cursor-pointer group relative">
 
-            <img
-              className="w-10 rounded-full"
-              src={userData.image}
-              alt=""
-            />
+            <img className="w-9 h-9 rounded-full object-cover" src={userData.image} alt="profile" />
 
-            <div className="text-md font-semibold border border-gray-300 border-[2px] rounded-full">
-              <p className="px-4">{userData.name}</p>
+            <div className="hidden sm:block text-sm font-semibold border border-gray-300 rounded-full">
+              <p className="px-4 py-1">
+                {userData.name}
+              </p>
             </div>
 
-            <img
-              className="w-2.5"
-              src={assets.dropdown_icon}
-              alt=""
-            />
+
+            <img className="w-2.5" src={assets.dropdown_icon} alt="dropdown" />
+
 
             {/* Dropdown */}
-            <div className="absolute top-0 right-0 pt-14 hidden group-hover:block z-20">
-              <div className="min-w-48 bg-white rounded-lg shadow-lg flex flex-col gap-2 p-4 text-gray-600">
+            <div className="absolute top-8 right-0 pt-5 hidden group-hover:block z-30">
 
-                <p
-                  onClick={() => navigate("/my-profile")}
-                  className="cursor-pointer hover:text-black"
-                >
+              <div className="min-w-48 bg-white rounded-lg shadow-lg flex flex-col gap-3 p-4 text-gray-600">
+
+                <p onClick={()=>navigate("/my-profile")} className="cursor-pointer hover:text-black">
                   My Profile
                 </p>
 
-                <p
-                  onClick={() => navigate("/my-appointments")}
-                  className="cursor-pointer hover:text-black"
-                >
+                <p onClick={()=>navigate("/my-appointments")} className="cursor-pointer hover:text-black">
                   My Appointments
                 </p>
 
-                <p
-                  onClick={logout}
-                  className="cursor-pointer hover:text-black"
-                >
+                <p onClick={logout} className="cursor-pointer hover:text-black">
                   Logout
                 </p>
 
               </div>
+
             </div>
 
           </div>
+
         ) : (
-          <button
-            onClick={() => navigate("/login")}
-            className="hidden md:block bg-primary text-white px-8 py-3 rounded-full"
-          >
+
+          <button onClick={()=>navigate("/login")} className="hidden md:block bg-primary text-white px-7 lg:px-8 py-3 rounded-full">
             Create Account
           </button>
+
         )}
 
-        {/* Mobile Menu Icon */}
-        <img
-          onClick={() => setShowMenu(true)}
-          className="w-6 md:hidden cursor-pointer"
-          src={assets.menu_icon}
-          alt=""
-        />
+
+
+        {/* Mobile Menu Button */}
+        <img onClick={()=>setShowMenu(true)} className="w-6 md:hidden cursor-pointer" src={assets.menu_icon} alt="menu" />
+
       </div>
 
+
+
+      {/* Mobile Overlay */}
+      {
+        showMenu && (
+          <div onClick={()=>setShowMenu(false)} className="fixed inset-0 bg-black/30 z-40 md:hidden"></div>
+        )
+      }
+
+
+
       {/* Mobile Menu */}
-      <div
-        className={`fixed top-0 right-0 bottom-0 z-50 bg-white transition-all duration-300 overflow-hidden ${
-          showMenu ? "w-full" : "w-0"
-        }`}
-      >
+      <div className={`fixed top-0 right-0 h-full bg-white z-50 w-[85%] sm:w-[70%] md:hidden transition-transform duration-300 ${showMenu ? "translate-x-0" : "translate-x-full"}`}>
 
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 py-6">
+        
+        {/* Menu Header */}
+        <div className="flex items-center justify-between px-5 py-6 border-b">
 
-          <img
-            className="w-36"
-            src={assets.logo}
-            alt=""
-          />
+          <img className="w-36" src={logo} alt="logo"/>
 
-          <img
-            onClick={() => setShowMenu(false)}
-            className="w-7 cursor-pointer"
-            src={assets.cross_icon}
-            alt=""
-          />
+          <img onClick={()=>setShowMenu(false)} className="w-7 cursor-pointer" src={assets.cross_icon} alt="close"/>
 
         </div>
 
-        {/* Mobile Links */}
+
+
+        {/* Menu Links */}
         <ul className="flex flex-col text-lg font-medium">
 
-          <NavLink
-            to="/"
-            onClick={() => setShowMenu(false)}
-            className="px-5 py-3 border-b"
-          >
+
+          <NavLink onClick={()=>setShowMenu(false)} to="/" className="px-5 py-4 border-b">
             Home
           </NavLink>
 
-          <NavLink
-            to="/doctors"
-            onClick={() => setShowMenu(false)}
-            className="px-5 py-3 border-b"
-          >
+
+          <NavLink onClick={()=>setShowMenu(false)} to="/doctors" className="px-5 py-4 border-b">
             All Doctors
           </NavLink>
 
-          <NavLink
-            to="/about"
-            onClick={() => setShowMenu(false)}
-            className="px-5 py-3 border-b"
-          >
+
+          <NavLink onClick={()=>setShowMenu(false)} to="/about" className="px-5 py-4 border-b">
             About
           </NavLink>
 
-          <NavLink
-            to="/contact"
-            onClick={() => setShowMenu(false)}
-            className="px-5 py-3 border-b"
-          >
+
+          <NavLink onClick={()=>setShowMenu(false)} to="/contact" className="px-5 py-4 border-b">
             Contact
           </NavLink>
 
+
+
           {!token && (
-            <button
-              onClick={() => {
-                navigate("/login");
-                setShowMenu(false);
-              }}
-              className="mx-5 mt-5 bg-primary text-white py-3 rounded-full"
-            >
+            <button onClick={()=>{navigate("/login");setShowMenu(false)}} className="mx-5 mt-6 bg-primary text-white py-3 rounded-full">
               Create Account
             </button>
           )}
+
+
         </ul>
 
       </div>
+
+
     </div>
   );
 };
