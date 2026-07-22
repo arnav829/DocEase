@@ -109,6 +109,5 @@ SMS Notifications
 
 💼 Full Stack Developer
 🌐 MERN Stack Developer
-☕ Java | JavaScript | React | Node.js | MongoDB | Express
 
 
