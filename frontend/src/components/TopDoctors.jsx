@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { assets } from '../assets/assets'
-import { div } from 'framer-motion/client'
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../context/AppContext'
+import { motion } from "framer-motion";
 
 const TopDoctors = () => {
 
